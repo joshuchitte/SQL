@@ -1,0 +1,85 @@
+
+CREATE DATABASE Students;
+USE Students;
+
+CREATE TABLE Student (
+  StudentID INT AUTO_INCREMENT,
+  FirstName VARCHAR(50) NOT NULL,
+  LastName VARCHAR(50) NOT NULL,
+  DateOfBirth DATE NOT NULL,
+  Gender ENUM('Male', 'Female', 'Other') NOT NULL,
+  Email VARCHAR(100) UNIQUE NOT NULL,
+  Phone VARCHAR(20) NOT NULL,
+  PRIMARY KEY (StudentID)
+);
+
+SHOW TABLES;
+DESCRIBE Student;
+
+
+CREATE TABLE Course (
+  CourseID INT AUTO_INCREMENT,
+  CourseTitle VARCHAR(100) NOT NULL,
+  Credits INT NOT NULL,
+  PRIMARY KEY (CourseID)
+);
+SHOW TABLES;
+DESCRIBE Course;
+
+
+
+CREATE TABLE Instructor (
+  InstructorID INT AUTO_INCREMENT,
+  FirstName VARCHAR(50) NOT NULL,
+  LastName VARCHAR(50) NOT NULL,
+  Email VARCHAR(100) UNIQUE NOT NULL,
+  PRIMARY KEY (InstructorID)
+);
+SHOW TABLES;
+DESCRIBE Instructor;
+
+
+
+CREATE TABLE Enrollment (
+  EnrollmentID INT AUTO_INCREMENT,
+  EnrollmentDate DATE NOT NULL,
+  StudentID INT NOT NULL,
+  CourseID INT NOT NULL,
+  InstructorID INT NOT NULL,
+  PRIMARY KEY (EnrollmentID),
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+  FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
+  FOREIGN KEY (InstructorID) REFERENCES Instructor(InstructorID)
+);
+SHOW TABLES;
+DESCRIBE Enrollment;
+
+
+
+CREATE TABLE Score (
+  ScoreID INT AUTO_INCREMENT,
+  CourseID INT NOT NULL,
+  StudentID INT NOT NULL,
+  DateOfExam DATE NOT NULL,
+  CreditObtained DECIMAL(3,2) NOT NULL,
+  PRIMARY KEY (ScoreID),
+  FOREIGN KEY (CourseID) REFERENCES Course(CourseID),
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+);
+SHOW TABLES;
+DESCRIBE Score;
+
+
+CREATE TABLE Feedback (
+  FeedbackID INT AUTO_INCREMENT,
+  StudentID INT NOT NULL,
+  Date DATE NOT NULL,
+  InstructorName VARCHAR(100) NOT NULL,
+  Feedback TEXT NOT NULL,
+  PRIMARY KEY (FeedbackID),
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+);
+SHOW TABLES;
+DESCRIBE Feedback;
+
+
